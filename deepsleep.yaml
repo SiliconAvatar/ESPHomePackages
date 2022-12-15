@@ -1,0 +1,44 @@
+#Deeeepppppp
+
+esphome:
+  on_boot:
+    - priority: -100
+      then:
+      - script.execute: deepsleeper
+
+deep_sleep:
+  run_duration: 30sec
+  sleep_duration: 3min
+  id: deep_sleep_1
+
+#Import input_boolean from HomeAssistant that will prevent deep sleep when set true
+#HomeAssistant MUST have this input boolean created by YOU first.
+binary_sensor:
+  - platform: homeassistant
+    name: Prevent Deep Sleep
+    internal: true
+    id: prevent_deepsleep
+    entity_id: input_boolean.ota_prevent_deepsleep
+    on_state:
+      then:
+      - script.execute: deepsleeper
+
+script:
+  - id: deepsleeper
+    mode: single
+    then:
+      - wait_until:
+          api.connected:
+      - delay: 20s
+      - if:
+          condition:
+            binary_sensor.is_on: prevent_deepsleep
+          then:
+            - logger.log: 'OTA Mode ON - Deep sleep DISABLED'
+            - deep_sleep.prevent: deep_sleep_1
+      - if:
+          condition:
+            binary_sensor.is_off: prevent_deepsleep
+          then:
+            - logger.log: 'OTA Mode OFF - Deep sleep ENABLED'
+            - deep_sleep.enter: deep_sleep_1

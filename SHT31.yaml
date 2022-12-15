@@ -1,0 +1,29 @@
+i2c:
+
+sensor:
+  - platform: sht3xd
+    temperature:
+      name: $friendly_name Temperature
+      filters:
+      - lambda: return x * (9.0/5.0) + 32.0;
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 3
+          send_first_at: 3
+      accuracy_decimals: 2
+      unit_of_measurement: "°F"
+      device_class: "temperature"
+      state_class: "measurement"
+    humidity:
+      name: $friendly_name Humidity
+      accuracy_decimals: 2
+      filters:
+      - sliding_window_moving_average:
+          window_size: 5
+          send_every: 3
+          send_first_at: 3
+      unit_of_measurement: "%RH"
+      device_class: "humidity"
+      state_class: "measurement"
+    address: 0x44
+    update_interval: 1s

@@ -1,0 +1,189 @@
+# common/s31.yaml
+
+# possible substitutions-
+#substitutions:
+#  device_name: lorem-ipsum
+#  friendly_name: Lorem Ipsum
+
+esphome:
+  name: ${device_name}
+  comment: $device_description
+  on_boot:
+    - priority: -100
+      then:
+      - if:
+          condition:
+            lambda: 'return ( (id(select_led).state == "Normal On") );'
+          then:
+            light.turn_on: blue_led
+esp8266:
+  restore_from_flash: true
+  board: esp01_1m
+
+uart:
+  rx_pin: RX
+  baud_rate: 4800
+
+logger:
+  baud_rate: 0 # (UART logging interferes with cse7766)
+
+binary_sensor:
+  # Template binary sensor to display if device is in-use or not
+  - platform: template
+    id: in_use
+    name: $friendly_name Device In Use
+
+  # Status of button on side of S31, not displayed on Home-Assistant UI
+  - platform: gpio
+    id: button_in
+    name:  $friendly_name Button
+    internal: true
+    pin:
+      number: GPIO0
+      mode: INPUT_PULLUP
+      inverted: True
+    entity_category: ''
+    on_press:
+        then:
+          - if:
+              condition: # only toggle relay if button is enabled
+                lambda: 'return (id(select_button).state == "Enabled");'
+              then:
+                switch.toggle: relay
+
+light:
+  - platform: status_led
+    id: blue_led
+    pin:
+      number: GPIO13
+      inverted: true
+
+switch:
+  # relay output
+  - platform: gpio
+    id: relay
+    name: $friendly_name Power Switch
+    pin: GPIO12
+    entity_category: ''
+    on_turn_on:
+      - script.execute: auto_off_timer
+    on_turn_off:
+      - script.execute: auto_on_timer
+
+# clock input from Home Assistant used to calculate total daily energy
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+select:
+  # option to disable hardware power button
+  - platform: template
+    name: Side Button Config
+    id: select_button
+    optimistic: true
+    options:
+      - Enabled
+      - Disabled
+    initial_option: Enabled
+    restore_value: true
+    icon: mdi:circle-double
+    entity_category: config
+
+  # option to enable auto-off
+  - platform: template
+    name: Outlet Auto-Off Config
+    id: auto_off_button
+    optimistic: true
+    options:
+      - Enabled
+      - Disabled
+    initial_option: Disabled
+    restore_value: true
+    icon: mdi:progress-clock
+    entity_category: config
+
+  # option to enable auto-on
+  - platform: template
+    name: Outlet Auto-On Config
+    id: auto_on_button
+    optimistic: true
+    options:
+      - Enabled
+      - Disabled
+    initial_option: Disabled
+    restore_value: true
+    icon: mdi:progress-clock
+    entity_category: config
+
+  # option to disable blue LED
+  - platform: template
+    name: Status LED Config
+    id: select_led
+    optimistic: true
+    entity_category: config
+    options:
+      - Normal On
+      - Normal Off
+    initial_option: Normal On
+    restore_value: true
+    icon: mdi:led-on
+    on_value:
+      then:
+      - if:
+          condition:
+            lambda: 'return ( (id(select_led).state == "Normal On") );'
+          then:
+            light.turn_on: blue_led
+      - if:
+          condition:
+            lambda: 'return ( (id(select_led).state == "Normal Off") );'
+          then:
+            light.turn_off: blue_led
+
+number:      # used as a threshold for whether the plugged-in devices is running.
+  - platform: template
+    name: Auto-Off Timer
+    min_value: 1
+    max_value: 1000
+    step: 1
+    initial_value: 60
+    id: autooff_time
+    entity_category: config
+    optimistic: true     # required for changing value from home assistant
+    restore_value: true
+    unit_of_measurement: Min(s)
+    mode: box
+  - platform: template
+    name: Auto-On Timer
+    min_value: 1
+    max_value: 1000
+    step: 1
+    initial_value: 60
+    id: autoon_time
+    entity_category: config
+    optimistic: true     # required for changing value from home assistant
+    restore_value: true
+    unit_of_measurement: Min(s)
+    mode: box
+
+script:
+  - id: auto_off_timer
+    mode: restart     # Light will be kept on for x minute(s) since
+                      # the latest time the script is executed
+    then:
+      - delay: !lambda "return ((id(autooff_time).state)*60*1000);"
+      - if:
+          condition: # only if auto-off mode is enabled
+            lambda: 'return (id(auto_off_button).state == "Enabled");'
+          then:
+            - switch.turn_off: relay
+  - id: auto_on_timer
+    mode: single     # Light will be turned on x minute(s) since
+                      # the first time the script is executed
+    then:
+      - delay: !lambda "return ((id(autoon_time).state)*60*1000);"
+      - if:
+          condition: # only if auto-off mode is enabled
+            lambda: 'return (id(auto_on_button).state == "Enabled");'
+          then:
+            - switch.turn_on: relay
