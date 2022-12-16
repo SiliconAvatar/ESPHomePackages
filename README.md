@@ -1,4 +1,4 @@
-# ESPHomePackages
+# ESPHome Packages
 
 This repository is a collection of premade packages for various ESP based devices, intended for use in ESPHome as remote packages.
 
