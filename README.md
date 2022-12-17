@@ -5,6 +5,28 @@ This repository is a collection of premade packages for various ESP based device
 Each folder contains packages for a specific device, with the folders named for devices themselves.
 Each folder also contains a readme describing the use of each package in the folder.
 
+## Supported Devices
+
+[Sonoff S31](Sonoff_S31/)
+
+[Sonoff MiniR2](Sonoff_MiniR2/)
+
+[BN-Link BNC-60](BN-LINK_BNC-60/)
+
+[KMC 4-Outlet (30608)](KMC_30608/)
+
+## Generic Helper Packages
+
+Diagnostics
+
+D1-Mini
+
+DeepSleep
+
+Bosch BMP280
+
+Sensirion SHT31
+
 ## Using Remote Packages
 
 There are three ways to add these remote packages to an ESPHome configuration:
