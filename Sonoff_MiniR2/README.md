@@ -1,5 +1,5 @@
 # Sonoff MiniR2 Packages
-![This is an image](../.resources/ProductPhoto_Sonoff-MiniR2.jpg)
+![Sonoff MiniR2 Device Photo](../.resources/DevicePhotos/ProductPhoto_Sonoff-MiniR2.jpg)
 
 ---
 
@@ -9,7 +9,7 @@ There is 1 package for the MiniR2.
 
 ## minir2.yaml
 This file contains the base configuration for the device.
-This includes the basic device definitions as well as control over the switch and relay.
+This includes the basic device definitions as well as control over the relay and switch status.
 
 This file should be included in all configurations of a MiniR2.
 
