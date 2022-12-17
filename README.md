@@ -7,13 +7,13 @@ Each folder also contains a readme describing the use of each package in the fol
 
 ## Supported Devices
 
-[Sonoff S31](Sonoff_S31/README.md)
+[Sonoff S31](Sonoff_S31/)
 
-[Sonoff MiniR2](Sonoff_MiniR2/README.md)
+[Sonoff MiniR2](Sonoff_MiniR2/)
 
-[BN-Link BNC-60](BN-Link_BNC-60/README.md)
+[BN-Link BNC-60](BN-Link_BNC-60/)
 
-[KMC 4-Outlet (30608)](KMC_30608/README.md)
+[KMC 4-Outlet (30608)](KMC_30608/)
 
 ## Generic Helper Packages
 
