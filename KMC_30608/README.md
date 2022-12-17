@@ -7,7 +7,7 @@ This folder is a collection of packages for the KMC 4-Outlet (30608) device.
 
 There is 1 packages for the KMC 4-Outlet (30608).
 
-## bnc60.yaml
+## kmc30608.yaml
 This file contains the full configuration for the device.
 This includes the basic device definitions as well as control over the relay and power monitor.
 
