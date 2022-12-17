@@ -1,4 +1,7 @@
 # Sonoff S31 Packages
+![This is an image](../.resources/ProductPhoto_Sonoff-S31.jpg)
+
+---
 
 This folder is a collection of packages for the Sonoff S31 and S31-Lite devices.
 
