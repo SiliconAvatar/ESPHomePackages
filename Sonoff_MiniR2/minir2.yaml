@@ -26,7 +26,7 @@ output:
 light:
   - platform: binary
     id: light_1
-    name: ${friendly_name} Light Switch
+    name: ${friendly_name} Light
     output: relay_1    
 
 binary_sensor:
@@ -47,6 +47,7 @@ binary_sensor:
   - platform: gpio
     pin: GPIO04
     id: switch_1
+    name: ${friendly_name} Light Switch
     on_press:
       then:
         - light.toggle: 
