@@ -11,7 +11,7 @@ Each folder also contains a readme describing the use of each package in the fol
 
 [Sonoff MiniR2](Sonoff_MiniR2/)
 
-[BN-Link BNC-60](BN-Link_BNC-60/)
+[BN-Link BNC-60](BN-LINK_BNC-60/)
 
 [KMC 4-Outlet (30608)](KMC_30608/)
 
