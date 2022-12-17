@@ -1,5 +1,5 @@
 # KMC 4-Outlet (30608) Packages
-![KMC 4-Outlet (30608) Device Photo](../.resources/DevicePhotos/ProductPhoto_KMC-30608.png)
+![KMC 4-Outlet (30608) Device Photo](../.resources/DevicePhotos/ProductPhoto_KMC-30608.jpg)
 
 ---
 
