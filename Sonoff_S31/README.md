@@ -88,6 +88,9 @@ Once this feature is enabled, set the "Auto-Off Timer" to the desired time delay
 To use this feature, first set the "Outlet Auto-On Config" to Enabled. </br>
 Once this feature is enabled, set the "Auto-On Timer" to the desired time delay between turning off the device, and it turning itself on.
 
+- In-Use Power Threshold Configuration: This feature allows the device to present a binary sensor entity, showing if the device plugged into the outlet is in use or not </br>
+To use this feature, set the "In-Use Power Threshold" to the wattage at which you want the device to be considered in use. </br>
+
 - Side Button Configuration: This feature allows you to disable the button on the side of the S31 from doing anything. </br>
 To enable use of the side button, set the "Side Button Config" to Enabled. </br>
 To disable use of the side button, set the "Side Button Config" to Disabled. </br>
