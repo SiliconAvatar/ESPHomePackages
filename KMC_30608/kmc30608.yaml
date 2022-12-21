@@ -1,5 +1,9 @@
 esphome:
   name: ${device_name}
+  comment: $device_description
+  project:
+    name: "SiliconAvatar.KMC30608_Package"
+    version: "2022.12.19"
   on_boot:
     - priority: -100
       then:

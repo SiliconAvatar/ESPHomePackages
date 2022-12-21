@@ -1,6 +1,9 @@
 esphome:
   name: ${device_name}
   comment: $device_description
+  project:
+    name: "SiliconAvatar.BNC60_Package"
+    version: "2022.12.19"
   
 esp8266:
   restore_from_flash: true
