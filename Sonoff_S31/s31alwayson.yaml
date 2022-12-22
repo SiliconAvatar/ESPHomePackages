@@ -8,6 +8,9 @@
 esphome:
   name: ${device_name}
   comment: $device_description
+  project:
+    name: "SiliconAvatar.S31_AlwaysOn_Package"
+    version: "2022.12.19"
   on_boot:
     - priority: 600
       then:
