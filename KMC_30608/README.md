@@ -32,7 +32,7 @@ packages:
     ref: main #Branch
     files: [Common/diagnostics.yaml]
     refresh: 1d
-  s33_packages:
+  kmc30608_packages:
     url: https://github.com/SiliconAvatar/ESPHomePackages
     ref: main #Branch
     files: [KMC_30608/kmc30608.yaml]

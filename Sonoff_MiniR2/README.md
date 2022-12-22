@@ -29,7 +29,7 @@ packages:
     ref: main #Branch
     files: [Common/diagnostics.yaml]
     refresh: 1d
-  s33_packages:
+  minir2_packages:
     url: https://github.com/SiliconAvatar/ESPHomePackages
     ref: main #Branch
     files: [Sonoff_MiniR2/minir2.yaml]
