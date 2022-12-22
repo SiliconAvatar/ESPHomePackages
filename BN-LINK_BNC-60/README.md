@@ -32,7 +32,7 @@ packages:
     ref: main #Branch
     files: [Common/diagnostics.yaml]
     refresh: 1d
-  s33_packages:
+  bnc60_packages:
     url: https://github.com/SiliconAvatar/ESPHomePackages
     ref: main #Branch
     files: [BNLinkBNC-60/bnc60.yaml]

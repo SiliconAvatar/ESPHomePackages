@@ -41,7 +41,7 @@ packages:
     ref: main #Branch
     files: [Common/diagnostics.yaml]
     refresh: 1d
-  s33_packages:
+  s31_packages:
     url: https://github.com/SiliconAvatar/ESPHomePackages
     ref: main #Branch
     files: [Sonoff_S31/s31.yaml, Sonoff_S31/s31power.yaml]
