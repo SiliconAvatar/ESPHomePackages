@@ -1,0 +1,311 @@
+substitutions:
+  device_name: home-power-monitor
+  friendly_name: HousePower
+  device_description: Modbus Power Meter
+
+packages:
+  wifi: !include common/wifi.yaml
+  diagnostics: !include common/diagnostics.yaml
+
+esphome:
+  name: ${device_name}
+  comment: $device_description
+  platform: ESP8266
+  board: d1_mini_pro
+api:
+ota:
+  password: "abcdef11111111111111111111abcdef"
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+logger:
+  baud_rate: 0
+
+uart:
+  id: uart_bus
+  tx_pin: GPIO1
+  rx_pin: GPIO3
+  baud_rate: 9600
+  stop_bits: 1
+
+modbus:
+  send_wait_time: 250ms
+  id: modbus_port
+
+modbus_controller:
+  - id: pm1
+    ## the Modbus device addr
+    address: 1
+    modbus_id: modbus_port
+    setup_priority: -10
+    command_throttle: 150ms
+    update_interval: 2s
+  - id: pm2
+    ## the Modbus device addr
+    address: 2
+    modbus_id: modbus_port
+    setup_priority: -10
+    command_throttle: 150ms
+    update_interval: 2s
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: pm1
+    id: phasea_voltage
+    name: $friendly_name PhaseA Voltage
+    address: 0
+    unit_of_measurement: "V"
+    device_class: "voltage"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    register_count: 10
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 1.0
+  - platform: modbus_controller
+    modbus_controller_id: pm1
+    id: phasea_current
+    name: $friendly_name PhaseA Current
+    address: 1
+    unit_of_measurement: "A"
+    device_class: "current"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.001
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: pm1
+    id: phasea_power
+    name: $friendly_name PhaseA Power
+    address: 3
+    unit_of_measurement: "W"
+    device_class: "power"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 10.0
+  - platform: modbus_controller
+    modbus_controller_id: pm1
+    id: phasea_frequency
+    name: $friendly_name PhaseA Frequency
+    address: 7
+    unit_of_measurement: "Hz"
+    device_class: "frequency"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.5
+  - platform: modbus_controller
+    modbus_controller_id: pm1
+    id: phasea_powerfactor
+    name: $friendly_name PhaseA PowerFactor
+    address: 8
+    device_class: "power_factor"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: pm2
+    id: phaseb_voltage
+    name: $friendly_name PhaseB Voltage
+    address: 0
+    unit_of_measurement: "V"
+    device_class: "voltage"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    register_count: 10
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 1.0
+  - platform: modbus_controller
+    modbus_controller_id: pm2
+    id: phaseb_current
+    name: $friendly_name PhaseB Current
+    address: 1
+    unit_of_measurement: "A"
+    device_class: "current"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.001
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.1
+  - platform: modbus_controller
+    modbus_controller_id: pm2
+    id: phaseb_power
+    name: $friendly_name PhaseB Power
+    address: 3
+    unit_of_measurement: "W"
+    device_class: "power"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_DWORD_R
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 10.0
+  - platform: modbus_controller
+    modbus_controller_id: pm2
+    id: phaseb_frequency
+    name: $friendly_name PhaseB Frequency
+    address: 7
+    unit_of_measurement: "Hz"
+    device_class: "frequency"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.5
+  - platform: modbus_controller
+    modbus_controller_id: pm2
+    id: phaseb_powerfactor
+    name: $friendly_name PhaseB PowerFactor
+    address: 8
+    device_class: "power_factor"
+    state_class: "measurement"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.01
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.1
+
+
+
+  - platform: template
+    name: $friendly_name Power
+    unit_of_measurement: W
+    accuracy_decimals: 1
+    device_class: "power"
+    state_class: "measurement"
+    update_interval: 1s
+    filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 15.0
+    id: power
+    lambda: 'return (id(phasea_power).state + id(phaseb_power).state);'
+
+  - platform: template
+    name: $friendly_name Current
+    unit_of_measurement: A
+    accuracy_decimals: 1
+    device_class: "current"
+    state_class: "measurement"
+    update_interval: 1s
+    filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.5
+    id: current
+    lambda: 'return (id(phasea_current).state + id(phaseb_current).state);'
+
+  - platform: template
+    name: $friendly_name Voltage
+    unit_of_measurement: V
+    accuracy_decimals: 1
+    device_class: "voltage"
+    state_class: "measurement"
+    update_interval: 1s
+    filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 1.0
+    id: voltage
+    lambda: 'return ((id(phasea_voltage).state + id(phaseb_voltage).state)/2.0);'
+
+  - platform: template
+    name: $friendly_name PowerFactor
+    accuracy_decimals: 2
+    device_class: "power_factor"
+    state_class: "measurement"
+    update_interval: 1s
+    filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 0.10
+    id: powerfactor
+    lambda: 'return ((id(phasea_powerfactor).state + id(phaseb_powerfactor).state)/2.0);'
+
+  - platform: template
+    name: $friendly_name Frequency
+    unit_of_measurement: Hz
+    accuracy_decimals: 1
+    device_class: "frequency"
+    state_class: "measurement"
+    update_interval: 1s
+    filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 10s
+        - delta: 1.0
+    id: frequency
+    lambda: 'return ((id(phasea_frequency).state + id(phaseb_frequency).state)/2.0);'
+
+  # Reports the total Power so-far each day, resets at midnight
+  # See https://esphome.io/components/sensor/total_daily_energy.html
+  - platform: total_daily_energy
+    name: $friendly_name Total Daily Energy
+    power_id: power
+    device_class: "energy"
+    state_class: "total_increasing"
+    filters:
+        - multiply: 0.001  ## convert Wh to kWh
+    unit_of_measurement: kWh
