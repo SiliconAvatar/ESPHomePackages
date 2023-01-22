@@ -1,0 +1,127 @@
+# common/s31power.yaml
+
+# possible substitutions-
+#substitutions:
+#  friendly_name: Lorem Ipsum
+
+
+sensor:
+  - platform: cse7766 #https://esphome.io/components/sensor/cse7766.html
+    power:
+      name: $friendly_name Power
+      unit_of_measurement: W
+      accuracy_decimals: 1
+      device_class: "power"
+      state_class: "measurement"
+      id: power
+      on_value:   # set or clear in_use template binary sensor depending on whether power usage is over threshold
+        - if:
+            condition:
+              lambda: 'return (x >= id(threshold).state);'
+            then:
+              - binary_sensor.template.publish:
+                  id: in_use
+                  state: ON
+            else:
+              - binary_sensor.template.publish:
+                  id: in_use
+                  state: OFF
+      filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 15s
+        - delta: 5.0
+      - throttle: 2s
+    current:
+      id: current
+      name: $friendly_name Current
+      unit_of_measurement: A
+      accuracy_decimals: 2
+      device_class: "current"
+      state_class: "measurement"
+      filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 15s
+        - delta: 0.1
+      - throttle: 2s
+    voltage:
+      id: voltage
+      name: $friendly_name Voltage
+      unit_of_measurement: V
+      accuracy_decimals: 1
+      device_class: "voltage"
+      state_class: "measurement"
+      filters:
+      - or:
+        - heartbeat: 60s
+        - throttle: 15s
+        - delta: 0.2
+      - throttle: 2s
+    update_interval: 2000ms
+
+  # Calculate the powerfactor of the device.
+  # Device's power reading is Wattage, so divide wattage by the VA to obtain PF
+  # If the current is below 0, return a PF of 0
+  - platform: template
+    name: $friendly_name Power Factor
+    id: power_factor
+    accuracy_decimals: 3
+    device_class: "power_factor"
+    state_class: "measurement"
+    lambda: |-
+          if (id(current).state > 0) {
+            return ( 
+              min( 
+                max( 
+                  ( id(power).state / (id(voltage).state * id(current).state) ) 
+                  , static_cast<float>(-1.0) )
+              , static_cast<float>(1.0) )
+            );}
+          else {return 0.0;}
+    update_interval: 5s
+    filters:
+    - or:
+        - heartbeat: 60s
+        - throttle: 15s
+        - delta: 0.1
+
+
+  # Reports the total Power so-far each day, resets at midnight
+  # See https://esphome.io/components/sensor/total_daily_energy.html
+  - platform: total_daily_energy
+    name: $friendly_name Total Daily Energy
+    power_id: power
+    device_class: "energy"
+    state_class: "total_increasing"
+    filters:
+        - multiply: 0.001  ## convert Wh to kWh
+    unit_of_measurement: kWh
+
+
+
+number:      # used as a threshold for whether the plugged-in devices is running.
+  - platform: template
+    name: In-Use Power Threshold
+    min_value: 1
+    max_value: 100
+    step: 1
+    initial_value: 3
+    id: threshold
+    entity_category: config
+    optimistic: true     # required for changing value from home assistant
+    restore_value: true
+    unit_of_measurement: Watt(s)
+    mode: box
+    on_value:
+      - if:               # set or clear in_use template binary sensor depending on whether power usage is above threshold
+          condition:
+            lambda: 'return (id(power).state >= x);'
+          then:
+            - binary_sensor.template.publish:
+                id: in_use
+                state: ON
+          else:
+            - binary_sensor.template.publish:
+                id: in_use
+                state: OFF
