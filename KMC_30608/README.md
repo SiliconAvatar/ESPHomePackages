@@ -5,7 +5,7 @@
 
 This folder is a collection of packages for the KMC 4-Outlet (30608) device.
 
-There is 1 packages for the KMC 4-Outlet (30608).
+There is 1 package for the KMC 4-Outlet (30608).
 
 ## kmc30608.yaml
 This file contains the full configuration for the device.
