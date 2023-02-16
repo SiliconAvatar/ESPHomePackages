@@ -6,7 +6,7 @@ esphome:
   
 esp8266:
   restore_from_flash: true
-  board: esp8285
+  board: esp01_1m
 
 # Enable logging
 logger:
