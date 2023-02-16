@@ -28,11 +28,10 @@ This file should only be included in configurations of an S31, and is not suppor
 ## Sample configuration of an S31 in ESPHome
 
 ```
-substitutions:
-  device_name: coffee-outlet
+esphome:
+  name: coffee-outlet
   friendly_name: Coffee Outlet
-  device_description: Sonoff S31 Outlet
-
+  comment: Sonoff S31 Outlet
 
 packages:
   wifi: !include common/wifi.yaml
