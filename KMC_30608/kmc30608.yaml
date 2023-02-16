@@ -1,7 +1,7 @@
 esphome:
   project:
     name: "SiliconAvatar.KMC30608_Package"
-    version: "SiliconAvatar-2023.2.15"
+    version: "SiliconAvatar-2023.2.16"
   min_version: "2023.2.0"
   on_boot:
     - priority: -100
