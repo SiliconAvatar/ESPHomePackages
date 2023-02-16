@@ -1,9 +1,8 @@
 esphome:
-  name: ${device_name}
-  comment: $device_description
   project:
     name: "SiliconAvatar.MiniR2_Package"
-    version: "2022.12.19"
+    version: "SiliconAvatar-2023.2.15"
+  min_version: "2023.2.0"
 
 esp8266:
   restore_from_flash: true
@@ -29,7 +28,7 @@ output:
 light:
   - platform: binary
     id: light_1
-    name: ${friendly_name} Light
+    name: Light
     output: relay_1    
 
 binary_sensor:
@@ -50,7 +49,7 @@ binary_sensor:
   - platform: gpio
     pin: GPIO04
     id: switch_1
-    name: ${friendly_name} Light Switch
+    name: Light Switch
     on_press:
       then:
         - light.toggle: 

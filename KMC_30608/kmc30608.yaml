@@ -1,9 +1,8 @@
 esphome:
-  name: ${device_name}
-  comment: $device_description
   project:
     name: "SiliconAvatar.KMC30608_Package"
-    version: "2022.12.19"
+    version: "SiliconAvatar-2023.2.15"
+  min_version: "2023.2.0"
   on_boot:
     - priority: -100
       then:
@@ -29,7 +28,7 @@ sensor:
     cf_pin: 4
     cf1_pin: 5
     voltage:
-      name: $friendly_name Voltage
+      name: Voltage
       unit_of_measurement: V
       accuracy_decimals: 1
       device_class: "voltage"
@@ -39,7 +38,7 @@ sensor:
           window_size: 3
           send_every: 3
     power:
-      name: $friendly_name Power
+      name: Power
       unit_of_measurement: W
       accuracy_decimals: 1
       device_class: "power"
@@ -62,7 +61,7 @@ sensor:
                   id: in_use
                   state: OFF
     current:
-      name: $friendly_name Current
+      name: Current
       unit_of_measurement: A
       accuracy_decimals: 2
       device_class: "current"
@@ -78,7 +77,7 @@ sensor:
   # Reports the total Power so-far each day, resets at midnight
   # See https://esphome.io/components/sensor/total_daily_energy.html
   - platform: total_daily_energy
-    name: $friendly_name Total Daily Energy
+    name: Total Daily Energy
     power_id: power
     device_class: "energy"
     state_class: "total_increasing"
@@ -102,15 +101,15 @@ switch:
   - platform: gpio
     pin: GPIO15
     id: relay1
-    name: $friendly_name Power Switch 1
+    name: Power Switch 1
   - platform: gpio
     pin: GPIO13
     id: relay2
-    name: $friendly_name Power Switch 2
+    name: Power Switch 2
   - platform: gpio
     pin: GPIO14
     id: relay3
-    name: $friendly_name Power Switch 3
+    name: Power Switch 3
 
 
 binary_sensor:
@@ -127,7 +126,7 @@ binary_sensor:
   # Template binary sensor to display if device is in-use or not
   - platform: template
     id: in_use
-    name: $friendly_name Device In Use
+    name: Device In Use
 
 number:      # used as a threshold for whether the plugged-in devices is running.
   - platform: template

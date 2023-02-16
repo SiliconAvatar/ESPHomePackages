@@ -16,11 +16,10 @@ This file should be included in all configurations of a MiniR2.
 ## Sample configuration of an MiniR2 in ESPHome
 
 ```
-substitutions:
-  device_name: closet-light
+esphome:
+  name: closet-light
   friendly_name: Closet
-  device_description: Sonoff MiniR2
-
+  comment: Sonoff MiniR2
 
 packages:
   wifi: !include common/wifi.yaml
