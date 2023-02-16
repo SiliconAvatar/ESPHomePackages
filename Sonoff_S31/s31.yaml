@@ -1,16 +1,8 @@
-# common/s31.yaml
-
-# possible substitutions-
-#substitutions:
-#  device_name: lorem-ipsum
-#  friendly_name: Lorem Ipsum
-
 esphome:
-  name: ${device_name}
-  comment: $device_description
   project:
     name: "SiliconAvatar.S31_Package"
-    version: "2022.12.19"
+    version: "SiliconAvatar-2023.2.15"
+  min_version: "2023.2.0"
   on_boot:
     - priority: -100
       then:
@@ -34,12 +26,12 @@ binary_sensor:
   # Template binary sensor to display if device is in-use or not
   - platform: template
     id: in_use
-    name: $friendly_name Device In Use
+    name: Device In Use
 
   # Status of button on side of S31, not displayed on Home-Assistant UI
   - platform: gpio
     id: button_in
-    name:  $friendly_name Button
+    name:  Button
     internal: true
     pin:
       number: GPIO0
@@ -65,7 +57,7 @@ switch:
   # relay output
   - platform: gpio
     id: relay
-    name: $friendly_name Power Switch
+    name: Power Switch
     pin: GPIO12
     entity_category: ''
     on_turn_on:

@@ -1,24 +1,18 @@
-# common/diagnostics.yaml
-
-# possible substitutions-
-#substitutions:
-#  friendly_name: Lorem Ipsum
-
 binary_sensor:
   # Status of device connected to Home-Assistant
   - platform: status
-    name: $friendly_name Status
+    name: Status
     entity_category: "diagnostic"
 
 button:
   - platform: restart
     id: restart_button
-    name: $friendly_name Restart
+    name: Restart
     entity_category: diagnostic
 
 sensor:
   - platform: wifi_signal # Reports the WiFi signal strength/RSSI in dB
-    name: "WiFi Signal dB"
+    name: WiFi Signal dB
     id: wifi_signal_db
     update_interval: 15s
     entity_category: "diagnostic"
@@ -29,7 +23,7 @@ sensor:
 
   - platform: copy # Reports the WiFi signal strength in %
     source_id: wifi_signal_db
-    name: "WiFi Signal Percent"
+    name: WiFi Signal Percent
     filters:
       - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
       - sliding_window_moving_average:
@@ -42,7 +36,7 @@ sensor:
   - platform: uptime
     name: Uptime Sensor
     entity_category: "diagnostic"
-    unit_of_measurement: days
+    unit_of_measurement: d
     update_interval: 60s
     accuracy_decimals: 1
     filters:

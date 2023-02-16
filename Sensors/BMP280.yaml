@@ -3,13 +3,13 @@ i2c:
 sensor:
   - platform: bmp280
     # temperature:
-    #   name: $friendly_name BMP Temperature
+    #   name: Temperature
     #   oversampling: 16x
     #   filters:
     #   - lambda: return x * (9.0/5.0) + 32.0;
     #   update_interval: 1s
     pressure:
-      name: $friendly_name Pressure
+      name: Pressure
       oversampling: 16x
       filters:
       - sliding_window_moving_average:

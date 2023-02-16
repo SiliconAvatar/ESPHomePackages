@@ -18,10 +18,12 @@ Note: In this configuration, the voltage divider and current resistor vales must
 ## Sample configuration of an BNLinkBNC-60 in ESPHome
 
 ```
-substitutions:
-  device_name: livingroom_tv_outlet
+esphome:
+  name: livingroom_tv_outlet
   friendly_name: Livingroom TV Outlet
-  device_description: BN Link BNC-60/U133TJ Outlet
+  comment: BN Link BNC-60/U133TJ Outlet
+
+substitutions:
   voltage_divider_value: "1745"
   current_resistor_value: "0.001"
 

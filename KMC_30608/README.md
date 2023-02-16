@@ -5,7 +5,7 @@
 
 This folder is a collection of packages for the KMC 4-Outlet (30608) device.
 
-There is 1 packages for the KMC 4-Outlet (30608).
+There is 1 package for the KMC 4-Outlet (30608).
 
 ## kmc30608.yaml
 This file contains the full configuration for the device.
@@ -18,10 +18,12 @@ Note: In this configuration, the voltage divider and current resistor vales must
 ## Sample configuration of an KMC 4-Outlet (30608) in ESPHome
 
 ```
-substitutions:
-  device_name: knc-30608-spare-1
+esphome:
+  name: knc-30608-spare-1
   friendly_name: KNC 30608 Spare 1
-  device_description: KNC 30608 Outlet
+  comment: KNC 30608 Outlet
+
+substitutions:
   voltage_divider_value: "8000"
   current_resistor_value: "0.01"
 
