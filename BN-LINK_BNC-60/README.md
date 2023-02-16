@@ -37,7 +37,7 @@ packages:
   bnc60_packages:
     url: https://github.com/SiliconAvatar/ESPHomePackages
     ref: main #Branch
-    files: [BNLinkBNC-60/bnc60.yaml]
+    files: [BN-LINK_BNC-60/bnc60.yaml]
     refresh: 1d
 
 # Enable Other-The-Air Updates
