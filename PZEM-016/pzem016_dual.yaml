@@ -1,20 +1,6 @@
-substitutions:
-  device_name: home-power-monitor
-  friendly_name: HousePower
-  device_description: Modbus Power Meter
-
-packages:
-  wifi: !include common/wifi.yaml
-  diagnostics: !include common/diagnostics.yaml
-
 esphome:
-  name: ${device_name}
-  comment: $device_description
   platform: ESP8266
   board: d1_mini_pro
-api:
-ota:
-  password: "abcdef11111111111111111111abcdef"
 
 time:
   - platform: homeassistant
