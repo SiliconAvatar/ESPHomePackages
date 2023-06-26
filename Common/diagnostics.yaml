@@ -20,7 +20,7 @@ sensor:
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
-      - throttle: 1m
+      - throttle: 60s
 
   - platform: copy # Reports the WiFi signal strength in %
     source_id: wifi_signal_db
@@ -30,7 +30,7 @@ sensor:
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
-      - throttle: 1m
+      - throttle: 60s
     unit_of_measurement: "Signal %"
     entity_category: "diagnostic"
 
@@ -43,4 +43,4 @@ sensor:
     accuracy_decimals: 1
     filters:
       - multiply: 0.000011574
-      - throttle: 30m
+      - throttle: 900s
