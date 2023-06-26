@@ -43,7 +43,7 @@ sensor:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 0.1
-      - throttle: 2s
+      - throttle: 5s
     voltage:
       id: voltage
       name: Voltage
@@ -59,7 +59,7 @@ sensor:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 0.2
-      - throttle: 2s
+      - throttle: 5s
     update_interval: 500ms
 
   # Calculate the powerfactor of the device.
@@ -81,7 +81,7 @@ sensor:
               , static_cast<float>(1.0) )
             );}
           else {return 0.0;}
-    update_interval: 5s
+    update_interval: 10s
     filters:
     - sliding_window_moving_average:
         window_size: 5
@@ -90,6 +90,7 @@ sensor:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 0.1
+    - throttle: 5s
 
 
   # Reports the total Power so-far each day, resets at midnight

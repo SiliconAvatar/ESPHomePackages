@@ -20,6 +20,7 @@ sensor:
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
+      - throttle: 1m
 
   - platform: copy # Reports the WiFi signal strength in %
     source_id: wifi_signal_db
@@ -29,6 +30,7 @@ sensor:
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
+      - throttle: 1m
     unit_of_measurement: "Signal %"
     entity_category: "diagnostic"
 
@@ -37,7 +39,8 @@ sensor:
     name: Uptime Sensor
     entity_category: "diagnostic"
     unit_of_measurement: d
-    update_interval: 60s
+    update_interval: 600s
     accuracy_decimals: 1
     filters:
       - multiply: 0.000011574
+      - throttle: 30m
