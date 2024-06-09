@@ -20,14 +20,11 @@ sensor:
                   id: in_use
                   state: OFF
       filters:
-      - sliding_window_moving_average:
-          window_size: 5
-          send_every: 4
+      - throttle_average: 2s
       - or:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 5.0
-      - throttle: 2s
     current:
       id: current
       name: Current
@@ -36,14 +33,11 @@ sensor:
       device_class: "current"
       state_class: "measurement"
       filters:
-      - sliding_window_moving_average:
-          window_size: 5
-          send_every: 4
+      - throttle_average: 2s
       - or:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 0.1
-      - throttle: 5s
     voltage:
       id: voltage
       name: Voltage
@@ -52,15 +46,12 @@ sensor:
       device_class: "voltage"
       state_class: "measurement"
       filters:
-      - sliding_window_moving_average:
-          window_size: 5
-          send_every: 4
+      - throttle_average: 2s
       - or:
         - heartbeat: 60s
         - throttle: 15s
         - delta: 0.2
       - throttle: 5s
-    update_interval: 500ms
 
   # Calculate the powerfactor of the device.
   # Device's power reading is Wattage, so divide wattage by the VA to obtain PF
