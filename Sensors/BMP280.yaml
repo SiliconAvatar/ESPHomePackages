@@ -1,7 +1,7 @@
 i2c:
 
 sensor:
-  - platform: bmp280
+  - platform: bmp280_i2c
     # temperature:
     #   name: Temperature
     #   oversampling: 16x
