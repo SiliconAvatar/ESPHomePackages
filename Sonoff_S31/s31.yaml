@@ -18,6 +18,7 @@ esp8266:
 uart:
   rx_pin: RX
   baud_rate: 4800
+  parity: EVEN
 
 logger:
   baud_rate: 0 # (UART logging interferes with cse7766)
