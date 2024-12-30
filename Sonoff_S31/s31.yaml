@@ -60,6 +60,7 @@ switch:
     id: relay
     name: Power Switch
     pin: GPIO12
+    restore_mode: RESTORE_DEFAULT_ON
     entity_category: ''
     on_turn_on:
       - script.execute: auto_off_timer
