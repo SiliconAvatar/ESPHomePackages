@@ -1,8 +1,8 @@
 esphome:
   project:
     name: "SiliconAvatar.MiniR2_Package"
-    version: "SiliconAvatar-2023.2.19"
-  min_version: "2023.2.0"
+    version: "SiliconAvatar-2026.7.5"
+  min_version: "2026.6.4"
 
 esp8266:
   restore_from_flash: true
@@ -38,7 +38,7 @@ binary_sensor:
     internal: true
     filters:
       - invert:
-      - delayed_off: 10ms
+      - delayed_on_off: 20ms
     on_press:
       - light.toggle: 
           id: light_1
@@ -50,6 +50,8 @@ binary_sensor:
     pin: GPIO04
     id: switch_1
     name: Toggle Switch Status
+    filters:
+      - delayed_on_off: 20ms
     on_press:
       then:
         - light.toggle: 

@@ -1,14 +1,14 @@
 esphome:
   project:
     name: "SiliconAvatar.KMC30608_Package"
-    version: "SiliconAvatar-2023.2.16"
-  min_version: "2023.2.0"
+    version: "SiliconAvatar-2026.7.5"
+  min_version: "2026.6.4"
   on_boot:
     - priority: -100
       then:
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal On") );'
+            lambda: 'return (id(select_led).current_option() == "Normal On");'
           then:
             light.turn_on: blue_led
 esp8266:
@@ -117,7 +117,7 @@ binary_sensor:
     pin: GPIO16
     id: front_button
     filters:
-      - delayed_off: 10ms
+      - delayed_on_off: 20ms
     on_press:
       then:
         - switch.toggle: relay1
@@ -172,11 +172,11 @@ select:
       then:
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal On") );'
+            lambda: 'return (id(select_led).current_option() == "Normal On");'
           then:
             light.turn_on: blue_led
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal Off") );'
+            lambda: 'return (id(select_led).current_option() == "Normal Off");'
           then:
             light.turn_off: blue_led

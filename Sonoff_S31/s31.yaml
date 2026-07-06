@@ -1,14 +1,14 @@
 esphome:
   project:
     name: "SiliconAvatar.S31_Package"
-    version: "SiliconAvatar-2023.2.15"
-  min_version: "2023.2.0"
+    version: "SiliconAvatar-2026.7.5"
+  min_version: "2026.6.4"
   on_boot:
     - priority: -100
       then:
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal On") );'
+            lambda: 'return (id(select_led).current_option() == "Normal On");'
           then:
             light.turn_on: blue_led
 esp8266:
@@ -38,12 +38,14 @@ binary_sensor:
       number: GPIO0
       mode: INPUT_PULLUP
       inverted: True
+    filters:
+      - delayed_on_off: 20ms
     entity_category: ''
     on_press:
         then:
           - if:
               condition: # only toggle relay if button is enabled
-                lambda: 'return (id(select_button).state == "Enabled");'
+                lambda: 'return (id(select_button).current_option() == "Enabled");'
               then:
                 switch.toggle: relay
 
@@ -128,12 +130,12 @@ select:
       then:
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal On") );'
+            lambda: 'return (id(select_led).current_option() == "Normal On");'
           then:
             light.turn_on: blue_led
       - if:
           condition:
-            lambda: 'return ( (id(select_led).state == "Normal Off") );'
+            lambda: 'return (id(select_led).current_option() == "Normal Off");'
           then:
             light.turn_off: blue_led
 
@@ -171,7 +173,7 @@ script:
       - delay: !lambda "return ((id(autooff_time).state)*60*1000);"
       - if:
           condition: # only if auto-off mode is enabled
-            lambda: 'return (id(auto_off_button).state == "Enabled");'
+            lambda: 'return (id(auto_off_button).current_option() == "Enabled");'
           then:
             - switch.turn_off: relay
   - id: auto_on_timer
@@ -181,6 +183,6 @@ script:
       - delay: !lambda "return ((id(autoon_time).state)*60*1000);"
       - if:
           condition: # only if auto-off mode is enabled
-            lambda: 'return (id(auto_on_button).state == "Enabled");'
+            lambda: 'return (id(auto_on_button).current_option() == "Enabled");'
           then:
             - switch.turn_on: relay

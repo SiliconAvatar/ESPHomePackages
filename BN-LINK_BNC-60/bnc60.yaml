@@ -1,8 +1,8 @@
 esphome:
   project:
     name: "SiliconAvatar.BNC60_Package"
-    version: "SiliconAvatar-2023.2.16"
-  min_version: "2023.2.0"
+    version: "SiliconAvatar-2026.7.5"
+  min_version: "2026.6.4"
   
 esp8266:
   restore_from_flash: true
@@ -95,7 +95,7 @@ binary_sensor:
     pin: GPIO3
     id: front_button
     filters:
-      - delayed_off: 10ms
+      - delayed_on_off: 20ms
     on_press:
       then:
         - switch.toggle: relay
