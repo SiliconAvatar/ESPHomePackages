@@ -22,7 +22,7 @@ sensor:
           window_size: 5
           send_every: 3
           send_first_at: 3
-      unit_of_measurement: "%""
+      unit_of_measurement: "%"
       device_class: "humidity"
       state_class: "measurement"
     address: 0x44

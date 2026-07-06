@@ -22,16 +22,18 @@ sensor:
           send_every: 1
       - throttle: 60s
 
-  - platform: copy # Reports the WiFi signal strength in %
-    source_id: wifi_signal_db
+  - platform: template # Reports the WiFi signal strength in %
     name: WiFi Signal Percent
+    lambda: return min(max(2 * (id(wifi_signal_db).state + 100.0), 0.0), 100.0);
+    update_interval: 15s
     filters:
-      - lambda: return min(max(2 * (x + 100.0), 0.0), 100.0);
       - sliding_window_moving_average:
           window_size: 5
           send_every: 1
       - throttle: 60s
-    unit_of_measurement: "Signal %"
+    unit_of_measurement: "%"
+    icon: mdi:wifi
+    state_class: "measurement"
     entity_category: "diagnostic"
 
 
